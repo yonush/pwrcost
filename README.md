@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/yonush/pwrcost.svg?branch=master)](https://travis-ci.org/yonush/pwrcost)
 
 # Introduction
-This sample aim to demonstrate a basic RESTful API - based off [famcost](https://github.com/thanhngvpt/famcost). It uses mostly built-in Go's packages such as `net/http`, `database/sql`, `strconv`, `html/template` and use a third party packages Gorilla/mux for teh router and jackc/pgx for the PostegreSQL driver
+This sample aim to demonstrate a basic RESTful API - based off [famcost](https://github.com/thanhngvpt/famcost). It uses mostly built-in Go's packages such as `net/http`, `database/sql`, `strconv`, `html/template` and use a third party packages `gorilla/mux` for teh router and `jackc/pgx` for the PostegreSQL driver
 
 This partial application was created to demonstrate the following:</p>
 
@@ -9,7 +9,7 @@ This partial application was created to demonstrate the following:</p>
 - RESTful API with gorilla/mux 
 - Datastorage using PostgreSQL - tested with 15.4.1
 - View a record details and add/edit records 
-- No filtering or sorting ahs been implemented
+- No filtering or sorting has been implemented
 
 The application is a standalone demo requiring no additional WAMP/LAMP dependencies. It has been built and tested on Windows, standalone Ubuntu Linux and WSL:Ubuntu. If the application requires rebuilding, there are two batch files provided. The rebuild assumes there is an existing Go installation on the host computer. The provided batch files will download the required 3rd party packages for the build process.
 
@@ -31,8 +31,8 @@ const (
 ```
 To run the server on your Windows system:
 
-1. Run `buildpkg.cmd` in the *pwrcost* folder to build the binary (`pwrcost.exe`) using non vendored packages
-1. Run `buildvendor.cmd` in the *pwrcost* folder to build the binary (`pwrcost.exe`) with the vendor
+1. Run `buildpkg.cmd` in the root of the repo to build the binary (`pwrcost.exe`) using non vendored packages
+1. Run `buildvendor.cmd` in the root of the repo to build the binary (`pwrcost.exe`) with the vendor
 1. Run the binary `pwrcost.exe` or used the run.cmd (has env variable set)
 1. Browse to [http://localhost:8080](http://localhost:8080) to test the application out. If port 80 does not work, you can start the app as follows.
 
