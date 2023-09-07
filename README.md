@@ -8,9 +8,8 @@ This partial application was created to demonstrate the following:</p>
 - Go HTML templates
 - RESTful API with gorilla/mux 
 - Datastorage using PostgreSQL - tested with 15.4.1
-- Filter and sort the output view
-- View a record details and add/edit parts for selected record
-- Change the status of a job
+- View a record details and add/edit records 
+- No filtering or sorting ahs been implemented
 
 The application is a standalone demo requiring no additional WAMP/LAMP dependencies. It has been built and tested on Windows, standalone Ubuntu Linux and WSL:Ubuntu. If the application requires rebuilding, there are two batch files provided. The rebuild assumes there is an existing Go installation on the host computer. The provided batch files will download the required 3rd party packages for the build process.
 
