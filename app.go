@@ -73,7 +73,7 @@ func (a *App) Initialize() {
 	// Create a string that will be used to make a connection later
 	// Note Password has been left out, which is best to avoid issues when using null password
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	log.Println("Connecting to PostgreSQL on")
+	log.Println("Connecting to PostgreSQL")
 	log.Println(psqlInfo)
 	db, err := sql.Open("pgx", psqlInfo)
 	a.db = db
@@ -151,7 +151,9 @@ func (a *App) Run(addr string) {
 	<-c
 	ctx, cancel := context.WithTimeout(context.Background(), wait)
 	defer cancel()
+	log.Println("shutting HTTP service down")
 	srv.Shutdown(ctx)
+	log.Println("closing database connections")
 	a.db.Close()
 	log.Println("shutting down")
 	os.Exit(0)

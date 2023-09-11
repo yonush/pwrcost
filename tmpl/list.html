@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/statics/ionicons/css/w3.css">
     <link rel="stylesheet" href="/statics/ionicons/css/ionicons.min.css">
-    <title>FamCost</title>
+    <title>PowerCost</title>
     <style>
         .hoverbtn:hover {
             font-weight: bold;
@@ -41,7 +41,7 @@
         <table class="w3-table w3-centered w3-border w3-bordered w3-hoverable">
             <thead>
             <tr>
-                <th>Ord</th>
+                <th>Index</th>
                 <th>Id</th>
                 <th>Electric Amount(KW)</th>
                 <th>Electric Price(VND)</th>
@@ -54,7 +54,7 @@
             <tbody>
             {{range $index, $cost := .}}
             <tr>
-                <td>#{{addOne $index}}</td>
+                <td>{{addOne $index}}</td>
                 <td>{{$cost.Id}}</td>
                 <td>{{$cost.ElectricAmount}}</td>
                 <td>{{multiplication $cost.ElectricPrice 1000}}</td>

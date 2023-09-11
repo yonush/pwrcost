@@ -90,7 +90,7 @@ func (a *App) importData() error {
 	}
 
 	// open the CSV file for importing in PG database
-	data, err := readData("costs.csv")
+	data, err := readData("data/costs.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -118,7 +118,7 @@ func (a *App) importData() error {
 	}
 
 	// open the CSV file for importing in PG database
-	data, err = readData("users.csv")
+	data, err = readData("data/users.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
