@@ -56,9 +56,7 @@ func (a *App) Initialize() {
 	//check if a different bind port was passed from the CLI
 	//os.Setenv("PORT", "8080")
 	tempport := os.Getenv("PORT")
-	if tempport == "" {
-		log.Fatal("$PORT must be set")
-	} else {
+	if tempport != "" {
 		a.bindport = tempport
 	}
 
@@ -66,6 +64,7 @@ func (a *App) Initialize() {
 		s := os.Args[1]
 
 		if _, err := strconv.ParseInt(s, 10, 64); err == nil {
+			log.Printf("Using port %s", s)
 			a.bindport = s
 		}
 	}
