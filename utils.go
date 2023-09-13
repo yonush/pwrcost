@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 func (a *App) checkInternalServerError(err error, w http.ResponseWriter) {
 	if err != nil {
@@ -13,4 +16,16 @@ func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
 	if !a.authenticated {
 		http.Redirect(w, r, "/login", 301)
 	}
+}
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	respondWithJSON(w, code, map[string]string{"error": message})
+}
+
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	response, _ := json.Marshal(payload)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	w.Write(response)
 }

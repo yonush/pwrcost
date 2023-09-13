@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -35,18 +34,6 @@ type App struct {
 	db            *sql.DB
 	authenticated bool
 	bindport      string
-}
-
-func respondWithError(w http.ResponseWriter, code int, message string) {
-	respondWithJSON(w, code, map[string]string{"error": message})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	w.Write(response)
 }
 
 func (a *App) Initialize() {
@@ -96,7 +83,6 @@ func (a *App) Initialize() {
 		log.Println("--- Importing demo data")
 		a.importData()
 	}
-
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()
 }

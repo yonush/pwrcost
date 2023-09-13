@@ -20,6 +20,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	role := r.FormValue("role")
+	// no range, bounds, context, type checking
 	// Check existence of user
 	var user User
 	err := a.db.QueryRow("SELECT username, password, role FROM users WHERE username=$1",
