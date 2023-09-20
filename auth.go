@@ -55,8 +55,8 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// query database to get match username
 	var user User
-	err := a.db.QueryRow("SELECT username, password FROM users WHERE username=$1",
-		username).Scan(&user.Username, &user.Password)
+	err := a.db.QueryRow("SELECT id, username, password FROM users WHERE username=$1",
+		username).Scan(&user.Id, &user.Username, &user.Password)
 	a.checkInternalServerError(err, w)
 
 	// validate password
@@ -77,7 +77,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Successful login. New session with initial constant and variable attributes
 	sess := session.NewSessionOptions(&session.SessOptions{
-		CAttrs: map[string]interface{}{"username": username},
+		CAttrs: map[string]interface{}{"username": user.Username, "userid": user.Id},
 		Attrs:  map[string]interface{}{"count": 1},
 	})
 	session.Add(sess, w)
@@ -93,7 +93,7 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	session.Remove(s, w)
 	s = nil
 
-	http.Redirect(w, r, "/login", 301)
+	//http.Redirect(w, r, "/login", 301)
 }
 
 func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {

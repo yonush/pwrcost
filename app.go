@@ -33,14 +33,12 @@ var (
 type App struct {
 	Router        *mux.Router
 	db            *sql.DB
-	authenticated bool
 	bindport      string
 	username      string
 	role          string
 }
 
 func (a *App) Initialize() {
-	a.authenticated = false
 	a.bindport = "80"
 
 	//check if a different bind port was passed from the CLI

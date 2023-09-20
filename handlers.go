@@ -30,6 +30,7 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rows, err := a.db.Query("SELECT * FROM cost ORDER by id")
+
 	a.checkInternalServerError(err, w)
 	var funcMap = template.FuncMap{
 		"multiplication": func(n int, f int) int {
@@ -43,7 +44,6 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	data := pwrData{}
 	data.Username = user
 
-	//var costs []Cost
 	var cost Cost
 	for rows.Next() {
 		err = rows.Scan(&cost.Id, &cost.ElectricAmount,
