@@ -5,7 +5,7 @@ This sample aim to demonstrate a basic RESTful API - based off [famcost](https:/
 
 This partial application was created to demonstrate the following:</p>
 
-- Go HTML templates
+- Go HTML templates with [W3.CSS](https://www.w3schools.com/w3css/w3css_examples.asp) stylesheet
 - RESTful API with gorilla/mux 
 - Datastorage using PostgreSQL - tested with 15.4.1
 - View a record details and add/edit records 
@@ -76,3 +76,13 @@ This version application requires a separate database to function - PostgreSQL. 
 ![Creating](statics/images/create.png "create")
 ![Creating](statics/images/list.png "create")
 
+## Session management
+
+The application uses the [icza/session](https://github.com/icza/session) module to handle some basic sessions for the authentication.
+
+Alternate session management be found at the following sources:
+
+- [swithek/sessionup](https://github.com/swithek/sessionup) Simple, yet effective HTTP session management and identification package
+- [gorilla/sessions](https://github.com/gorilla/sessions) - provides cookie and filesystem sessions and infrastructure for custom session backends along with the gorilla mux
+- [alexedwards/scs](https://github.com/alexedwards/scs) - session management with over 19 different datastores
+- [](https://github.com/adam-hanna/sessions) - A dead simple, highly performant, highly customizable sessions service for go http servers using redis as a datastore.

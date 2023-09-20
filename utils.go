@@ -12,12 +12,6 @@ func (a *App) checkInternalServerError(err error, w http.ResponseWriter) {
 	}
 }
 
-func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
-	if !a.authenticated {
-		http.Redirect(w, r, "/login", 301)
-	}
-}
-
 func respondWithError(w http.ResponseWriter, code int, message string) {
 	respondWithJSON(w, code, map[string]string{"error": message})
 }
