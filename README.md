@@ -1,5 +1,11 @@
 [![Build Status](https://travis-ci.org/yonush/pwrcost.svg?branch=master)](https://travis-ci.org/yonush/pwrcost)
 
+# TODO
+- :white_check_mark: basic session handling
+- :white_large_square: unit tests
+- :white_large_square: record filtering
+- :white_large_square: sort by column
+
 # Introduction
 This sample aim to demonstrate a basic RESTful API - based off [famcost](https://github.com/thanhngvpt/famcost). It uses mostly built-in Go's packages such as `net/http`, `database/sql`, `strconv`, `html/template` and use a third party packages `gorilla/mux` for teh router and `jackc/pgx` for the PostegreSQL driver
 
@@ -72,17 +78,25 @@ The application uses the following Go packages to build;
 
 This version application requires a separate database to function - PostgreSQL. A few CSV files are imported from the local data folder. This will be imported when the application is run for the first time. Thereafter the application will use the database each time it is executed.
 
-## Sample screens
-![Creating](statics/images/create.png "create")
-![Creating](statics/images/list.png "create")
-
 ## Session management
 
 The application uses the [icza/session](https://github.com/icza/session) module to handle some basic sessions for the authentication.
+Refer to [auth.go](https://github.com/yonush/pwrcost/blob/main/auth.go) for the basic authentication.
 
-Alternate session management be found at the following sources:
+Alternate session management can be found at the following sources:
 
 - [swithek/sessionup](https://github.com/swithek/sessionup) Simple, yet effective HTTP session management and identification package
 - [gorilla/sessions](https://github.com/gorilla/sessions) - provides cookie and filesystem sessions and infrastructure for custom session backends along with the gorilla mux
 - [alexedwards/scs](https://github.com/alexedwards/scs) - session management with over 19 different datastores
-- [](https://github.com/adam-hanna/sessions) - A dead simple, highly performant, highly customizable sessions service for go http servers using redis as a datastore.
+- [adam-hanna/sessions](https://github.com/adam-hanna/sessions) - A dead simple, highly performant, highly customizable sessions service for go http servers using redis as a datastore.
+
+## Testing the API
+
+Refer to the following articles on creating tests for RESTful APIs
+- [Get Started Testing an API Built With Golang](https://www.twilio.com/blog/get-started-testing-api-built-with-golang)
+- [Develop REST API using Go and Test using various methods](https://dev.to/chefgs/develop-rest-api-using-go-and-test-using-various-methods-8e0)
+- [Testing REST API in Go with Testify and Mockery](https://medium.com/nerd-for-tech/testing-rest-api-in-go-with-testify-and-mockery-c31ea2cc88f9)
+
+## Sample screens
+![Creating](statics/images/create.png "create")
+![Creating](statics/images/list.png "create")

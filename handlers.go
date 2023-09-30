@@ -1,5 +1,4 @@
 package main
-
 import (
 	"fmt"
 	"html/template"
@@ -55,7 +54,6 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	checkInternalServerError(err, w)
 	err = t.Execute(w, data)
 	checkInternalServerError(err, w)
-
 }
 
 func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,6 +61,7 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 301)
 	}
+
 	var cost Cost
 	cost.ElectricAmount, _ = strconv.Atoi(r.FormValue("ElectricAmount"))
 	cost.ElectricPrice, _ = strconv.Atoi(r.FormValue("ElectricPrice"))
@@ -75,6 +74,7 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 		INSERT INTO cost(electric_amount, electric_price, water_amount, water_price, checked_date)
 		VALUES($1, $2, $3, $4, $5)
 	`)
+
 	if err != nil {
 		fmt.Println("Prepare query error")
 		panic(err)
@@ -85,6 +85,7 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Execute query error")
 		panic(err)
 	}
+
 	http.Redirect(w, r, "/", 301)
 }
 
@@ -93,6 +94,7 @@ func (a *App) updateHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 301)
 	}
+
 	var cost Cost
 	cost.Id, _ = strconv.Atoi(r.FormValue("Id"))
 	cost.ElectricAmount, _ = strconv.Atoi(r.FormValue("ElectricAmount"))
@@ -104,6 +106,7 @@ func (a *App) updateHandler(w http.ResponseWriter, r *http.Request) {
 		UPDATE cost SET electric_amount=$1, electric_price=$2, water_amount=$3, water_price=$4, checked_date=$5
 		WHERE id=$6
 	`)
+
 	checkInternalServerError(err, w)
 	res, err := stmt.Exec(cost.ElectricAmount, cost.ElectricPrice,
 		cost.WaterAmount, cost.WaterPrice, cost.CheckedDate, cost.Id)
