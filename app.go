@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/icza/session"
 	_ "github.com/jackc/pgx/v5/stdlib" //use pgx in database/sql mode
 )
 
@@ -31,11 +30,11 @@ var (
 )
 
 type App struct {
-	Router        *mux.Router
-	db            *sql.DB
-	bindport      string
-	username      string
-	role          string
+	Router   *mux.Router
+	db       *sql.DB
+	bindport string
+	username string
+	role     string
 }
 
 func (a *App) Initialize() {
@@ -85,11 +84,8 @@ func (a *App) Initialize() {
 		a.importData()
 	}
 
-	// Initialize the session manager - this is a global
-	// For testing purposes, we want cookies to be sent over HTTP too (not just HTTPS)
-	// refer to the auth.go for the authentication handlers using the sessions
-	session.Global.Close()
-	session.Global = session.NewCookieManagerOptions(session.NewInMemStore(), &session.CookieMngrOptions{AllowHTTP: true})
+	//set some defaults for the authentication to also support HTTP and HTTPS
+	a.setupAuth()
 
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()

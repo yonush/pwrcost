@@ -118,3 +118,12 @@ func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 301)
 	}
 }
+
+func (a *App) setupAuth() {
+	// Initialize the session manager - this is a global
+	// For testing purposes, we want cookies to be sent over HTTP too (not just HTTPS)
+	// refer to the auth.go for the authentication handlers using the sessions
+	session.Global.Close()
+	session.Global = session.NewCookieManagerOptions(session.NewInMemStore(), &session.CookieMngrOptions{AllowHTTP: true})
+
+}
