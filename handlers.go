@@ -31,7 +31,7 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := a.db.Query("SELECT * FROM cost ORDER by id")
 
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	var funcMap = template.FuncMap{
 		"multiplication": func(n int, f int) int {
 			return n * f
@@ -48,13 +48,13 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		err = rows.Scan(&cost.Id, &cost.ElectricAmount,
 			&cost.ElectricPrice, &cost.WaterAmount, &cost.WaterPrice, &cost.CheckedDate)
-		a.checkInternalServerError(err, w)
+		checkInternalServerError(err, w)
 		data.Costs = append(data.Costs, cost)
 	}
 	t, err := template.New("list.html").Funcs(funcMap).ParseFiles("tmpl/list.html")
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	err = t.Execute(w, data)
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 
 }
 
@@ -104,12 +104,12 @@ func (a *App) updateHandler(w http.ResponseWriter, r *http.Request) {
 		UPDATE cost SET electric_amount=$1, electric_price=$2, water_amount=$3, water_price=$4, checked_date=$5
 		WHERE id=$6
 	`)
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	res, err := stmt.Exec(cost.ElectricAmount, cost.ElectricPrice,
 		cost.WaterAmount, cost.WaterPrice, cost.CheckedDate, cost.Id)
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	_, err = res.RowsAffected()
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	http.Redirect(w, r, "/", 301)
 
 }
@@ -121,11 +121,11 @@ func (a *App) deleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var costId, _ = strconv.ParseInt(r.FormValue("Id"), 10, 64)
 	stmt, err := a.db.Prepare("DELETE FROM cost WHERE id=$1")
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	res, err := stmt.Exec(costId)
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	_, err = res.RowsAffected()
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 	http.Redirect(w, r, "/", 301)
 
 }

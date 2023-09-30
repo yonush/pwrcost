@@ -29,11 +29,11 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 	// user is available
 	case err == sql.ErrNoRows:
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-		a.checkInternalServerError(err, w)
+		checkInternalServerError(err, w)
 		// insert to database
 		_, err = a.db.Exec(`INSERT INTO users(username, password, role) VALUES($1, $2, $3)`,
 			username, hashedPassword, role)
-		a.checkInternalServerError(err, w)
+		checkInternalServerError(err, w)
 	case err != nil:
 		http.Error(w, "loi: "+err.Error(), http.StatusBadRequest)
 		return
@@ -57,7 +57,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	var user User
 	err := a.db.QueryRow("SELECT id, username, password FROM users WHERE username=$1",
 		username).Scan(&user.Id, &user.Username, &user.Password)
-	a.checkInternalServerError(err, w)
+	checkInternalServerError(err, w)
 
 	// validate password
 	/*
@@ -93,7 +93,7 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	session.Remove(s, w)
 	s = nil
 
-	//http.Redirect(w, r, "/login", 301)
+	http.Redirect(w, r, "/login", 301)
 }
 
 func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
