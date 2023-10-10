@@ -1,11 +1,5 @@
 [![Build Status](https://travis-ci.org/yonush/pwrcost.svg?branch=master)](https://travis-ci.org/yonush/pwrcost)
 
-# TODO
-- :white_check_mark: basic session handling
-- :white_large_square: unit tests
-- :white_large_square: record filtering
-- :white_large_square: sort by column
-
 # Introduction
 This sample aim to demonstrate a basic RESTful API - based off [famcost](https://github.com/thanhngvpt/famcost). It uses mostly built-in Go's packages such as `net/http`, `database/sql`, `strconv`, `html/template` and use a third party packages `gorilla/mux` for teh router and `jackc/pgx` for the PostegreSQL driver
 
@@ -13,14 +7,20 @@ This partial application was created to demonstrate the following:</p>
 
 - Go HTML templates with [W3.CSS](https://www.w3schools.com/w3css/w3css_examples.asp) stylesheet
 - RESTful API with gorilla/mux 
-- Datastorage using PostgreSQL - tested with 15.4.1
+- Data storage using PostgreSQL - tested with 15.4.1
 - View a record details and add/edit records 
-- No filtering or sorting has been implemented
+- No filtering has been implemented
 
 The application is a standalone demo requiring no additional WAMP/LAMP dependencies. It has been built and tested on Windows, standalone Ubuntu Linux and WSL:Ubuntu. If the application requires rebuilding, there are two batch files provided. The rebuild assumes there is an existing Go installation on the host computer. The provided batch files will download the required 3rd party packages for the build process.
 
+# TODO
+- :white_check_mark: basic session handling
+- :white_large_square: unit tests
+- :white_large_square: record filtering
+- :white_check_mark: sort by column
+
 ## Building
-This application uses the Go programming language - where the latest was [Go 1.21](https://go.dev/dl/) as of writing this application. If you do not have Go installed on your system, you can acquire a copy from [Go.dev](https://go.dev/dl/). The go1.21.0.windows-amd64.msi was used to build this application.
+This application uses the Go programming language - where the latest was [Go 1.21.x](https://go.dev/dl/) as of writing this application. If you do not have Go installed on your system, you can acquire a copy from [Go.dev](https://go.dev/dl/). The go1.21.0.windows-amd64.msi was used to build this application.
 
 
 ### Database configuration

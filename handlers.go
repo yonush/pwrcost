@@ -1,10 +1,12 @@
 package main
+
 import (
-	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/gorilla/mux"
 	"github.com/icza/session"
 )
 
@@ -28,8 +30,30 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusBadRequest)
 	}
 
-	rows, err := a.db.Query("SELECT * FROM cost ORDER by id")
+	// determine the sorting index
+	params := mux.Vars(r)
+	sortcol, err := strconv.Atoi(params["srt"])
 
+	_, ok := params["srt"]
+	if ok && err != nil {
+		http.Redirect(w, r, "/list", http.StatusFound)
+	}
+
+	SQL := ""
+
+	//sort the view data before sending it back to the template view
+	switch sortcol {
+	case 1:
+		SQL = "SELECT * FROM cost ORDER by checked_date"
+	case 2:
+		SQL = "SELECT * FROM cost ORDER by electric_amount"
+	case 3:
+		SQL = "SELECT * FROM cost ORDER by water_amount"
+	default:
+		SQL = "SELECT * FROM cost ORDER by id"
+	}
+
+	rows, err := a.db.Query(SQL)
 	checkInternalServerError(err, w)
 	var funcMap = template.FuncMap{
 		"multiplication": func(n int, f int) int {
@@ -76,14 +100,14 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 	`)
 
 	if err != nil {
-		fmt.Println("Prepare query error")
-		panic(err)
+		log.Printf("Prepare query error")
+		checkInternalServerError(err, w)
 	}
 	_, err = stmt.Exec(cost.ElectricAmount, cost.ElectricPrice,
 		cost.WaterAmount, cost.WaterPrice, cost.CheckedDate)
 	if err != nil {
-		fmt.Println("Execute query error")
-		panic(err)
+		log.Printf("Execute query error")
+		checkInternalServerError(err, w)
 	}
 
 	http.Redirect(w, r, "/", 301)
