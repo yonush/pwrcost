@@ -15,9 +15,10 @@ The application is a standalone demo requiring no additional WAMP/LAMP dependenc
 
 # TODO
 - :white_check_mark: basic session handling
-- :white_large_square: unit tests
-- :white_large_square: record filtering
 - :white_check_mark: sort by column
+- :white_large_square: update CRUD to support filtering by userid
+- :white_large_square: unit tests
+- :white_large_square: search for a record
 
 ## Building
 This application uses the Go programming language - where the latest was [Go 1.21.x](https://go.dev/dl/) as of writing this application. If you do not have Go installed on your system, you can acquire a copy from [Go.dev](https://go.dev/dl/). The go1.21.0.windows-amd64.msi was used to build this application.
