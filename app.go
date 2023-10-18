@@ -109,6 +109,7 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/delete", a.deleteHandler).Methods("POST", "GET")
 
 	log.Println("Routes established")
+	log.
 }
 
 func (a *App) Run(addr string) {
