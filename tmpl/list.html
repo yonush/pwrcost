@@ -64,7 +64,14 @@
                 <td>{{multiplication $cost.WaterPrice 1000}}</td>
                 <td>{{$cost.CheckedDate}}</td>
                 <td>
-                    <button class="w3-btn w3-teal" onclick="updateCost(this);">Modify</button>
+                    <button class="w3-btn w3-teal" onclick="updateCost(this);"
+                        data-id="{{$cost.Id}}"
+                        data-ElectricAmount="{{$cost.ElectricAmount}}"
+                        data-ElectricPrice="{{multiplication $cost.ElectricPrice 1000}}"
+                        data-WaterAmount="{{$cost.WaterAmount}}"
+                        data-WaterPrice="{{multiplication $cost.WaterPrice 1000}}"
+                        data-CheckedDate="{{$cost.CheckedDate}}"                                       
+                    >Modify</button>
                     <button class="w3-btn w3-red" onclick="deleteCost(this)">Delete</button>
                 </td>
             </tr>
@@ -163,6 +170,20 @@
     // display update form
     editForm.style.display = 'block';
     // get cost id to update
+    var id = e.getAttribute("data-id");
+    var ElectricAmount = e.getAttribute("data-ElectricAmount");
+    var ElectricPrice = e.getAttribute("data-ElectricPrice");
+    var WaterAmount = e.getAttribute("data-WaterAmount");
+    var WaterPrice = e.getAttribute("data-WaterPrice");
+    var CheckedDate = e.getAttribute("data-CheckedDate");
+
+    // Populate the edit form fields with the note data
+    document.getElementById("ElectricAmount").value = ElectricAmount;
+    document.getElementById("ElectricPrice").value = ElectricPrice;
+    document.getElementById("WaterAmount").value = WaterAmount;
+    document.getElementById("WaterPrice").value = WaterPrice;
+    document.getElementById("CheckedDate").value = CheckedDate;
+
     var costId = e.parentNode.parentNode.childNodes[3].innerText;
     document.getElementById('costIdToUpdate').value = costId;
   }
