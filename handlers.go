@@ -18,16 +18,17 @@ type pwrData struct {
 func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	a.isAuthenticated(w, r)
 
-	//get the current username
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", http.StatusBadRequest)
+	}
+
+	//Current logged in session
 	sess := session.Get(r)
 	user := "[guest]"
 
+	//get the current username if they are logged in
 	if sess != nil {
 		user = sess.CAttr("username").(string)
-	}
-
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", http.StatusBadRequest)
 	}
 
 	// determine the sorting index
@@ -40,7 +41,6 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SQL := ""
-
 	//sort the view data before sending it back to the template view
 	switch sortcol {
 	case 1:
@@ -55,6 +55,9 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := a.db.Query(SQL)
 	checkInternalServerError(err, w)
+	defer rows.Close()
+
+	// add some custom template functions to update the view
 	var funcMap = template.FuncMap{
 		"multiplication": func(n int, f int) int {
 			return n * f
@@ -64,6 +67,7 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	//populate data for the template
 	data := pwrData{}
 	data.Username = user
 
@@ -74,6 +78,7 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 		checkInternalServerError(err, w)
 		data.Costs = append(data.Costs, cost)
 	}
+
 	t, err := template.New("list.html").Funcs(funcMap).ParseFiles("tmpl/list.html")
 	checkInternalServerError(err, w)
 	err = t.Execute(w, data)
@@ -83,7 +88,7 @@ func (a *App) listHandler(w http.ResponseWriter, r *http.Request) {
 func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 	a.isAuthenticated(w, r)
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/", 301)
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 	}
 
 	var cost Cost
@@ -110,13 +115,13 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 		checkInternalServerError(err, w)
 	}
 
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
 
 func (a *App) updateHandler(w http.ResponseWriter, r *http.Request) {
 	a.isAuthenticated(w, r)
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/", 301)
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 	}
 
 	var cost Cost
@@ -137,14 +142,13 @@ func (a *App) updateHandler(w http.ResponseWriter, r *http.Request) {
 	checkInternalServerError(err, w)
 	_, err = res.RowsAffected()
 	checkInternalServerError(err, w)
-	http.Redirect(w, r, "/", 301)
-
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
 
 func (a *App) deleteHandler(w http.ResponseWriter, r *http.Request) {
 	a.isAuthenticated(w, r)
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/", 301)
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 	}
 	var costId, _ = strconv.ParseInt(r.FormValue("Id"), 10, 64)
 	stmt, err := a.db.Prepare("DELETE FROM cost WHERE id=$1")
@@ -153,11 +157,11 @@ func (a *App) deleteHandler(w http.ResponseWriter, r *http.Request) {
 	checkInternalServerError(err, w)
 	_, err = res.RowsAffected()
 	checkInternalServerError(err, w)
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 
 }
 
 func (a *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	a.isAuthenticated(w, r)
-	http.Redirect(w, r, "/list", 301)
+	http.Redirect(w, r, "/list", http.StatusMovedPermanently)
 }

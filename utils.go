@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net"
 	"net/http"
@@ -9,11 +8,13 @@ import (
 
 func checkInternalServerError(err error, w http.ResponseWriter) {
 	if err != nil {
+		//fmt.Println("HTTP Response Status:", resp.StatusCode, http.StatusText(resp.StatusCode))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
 
+/*
 func respondWithError(w http.ResponseWriter, code int, message string) {
 	respondWithJSON(w, code, map[string]string{"error": message})
 }
@@ -25,6 +26,7 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.WriteHeader(code)
 	w.Write(response)
 }
+*/
 
 // used to auto detect the active local IP address - not used yet
 func GetOutboundIP() string {

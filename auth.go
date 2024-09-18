@@ -63,7 +63,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	/*
 		//simple unencrypted method
 		if user.Password != password {
-			http.Redirect(w, r, "/login", 301)
+			http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 			return
 		}
 	*/
@@ -71,7 +71,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	//password is encrypted
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 		return
 	}
 
@@ -82,7 +82,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	session.Add(sess, w)
 
-	http.Redirect(w, r, "/list", 301)
+	http.Redirect(w, r, "/list", http.StatusMovedPermanently)
 }
 
 func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,7 +93,7 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	session.Remove(s, w)
 	s = nil
 
-	http.Redirect(w, r, "/login", 301)
+	http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 }
 
 func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
@@ -115,7 +115,7 @@ func (a *App) isAuthenticated(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !authenticated {
-		http.Redirect(w, r, "/login", 301)
+		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
 	}
 }
 
