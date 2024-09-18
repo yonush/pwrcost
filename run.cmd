@@ -1,4 +1,5 @@
 @echo off
 SETLOCAL
 SET PORT=8080
-pwrcost
+::pwrcost
+go run main.go 8080

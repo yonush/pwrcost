@@ -20,7 +20,7 @@ const (
 	host     = "localhost" //127.0.0.1
 	port     = 5432
 	user     = "postgres"
-	password = "postgres"
+	password = "password"
 	dbname   = "ESD"
 )
 
