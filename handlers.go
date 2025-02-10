@@ -90,7 +90,7 @@ func (a *App) createHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 	}
-
+	
 	var cost Cost
 	cost.ElectricAmount, _ = strconv.Atoi(r.FormValue("ElectricAmount"))
 	cost.ElectricPrice, _ = strconv.Atoi(r.FormValue("ElectricPrice"))
